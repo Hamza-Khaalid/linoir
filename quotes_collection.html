@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeNoir Collections</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="collection-styles.css">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+  <style>
+    /* Collections Page Styles */
+    .collections-page {
+      padding: 100px 20px 50px;
+      background: #ddd;
+      min-height: 100vh;
+    }
+
+    .collection-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 50px;
+      color: #333;
+      text-shadow:0 5px 15px rgba(0, 0, 0, 0.2) ;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover {
+      box-shadow:rgb(0, 0, 0) 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-image {
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 20px;
+    }
+
+    .product-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .product-price {
+      font-size: 1.4rem;
+      color: #222;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .product-price::before {
+      content: "PKR ";
+    }
+
+    .product-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-cart {
+      background: #444;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+      transition: background 0.3s ease;
+    }
+
+    .btn-buy {
+      background: #555;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+      transition: background 0.3s ease;
+    }
+
+    .btn-cart:hover {
+      background: #333;
+    }
+
+    .btn-buy:hover {
+      background: #444;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .collection-title {
+        font-size: 2rem;
+      }
+      
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-actions {
+        flex-direction: column;
+      }
+    }
+
+    /* Checkout Popup Styles */
+.checkout-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.checkout-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.checkout-content {
+  display: grid;
+  gap: 20px;
+}
+
+.product-details {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+}
+
+.product-details img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin: 0 auto 15px;
+}
+
+.checkout-form {
+  display: grid;
+  gap: 15px;
+}
+
+.form-group {
+  display: grid;
+  gap: 5px;
+}
+
+.form-group input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .checkout-modal {
+    padding: 20px;
+  }
+  
+  .product-details img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    max-width: 90%;
+    background: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
+.alert i {
+    margin-right: 10px;
+}
+
+
+.form-group option{
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.checkout-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-form label {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.checkout-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.checkout-form select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+
+
+/* Consistent dropdowns (already shared, included here again for completeness) */
+.checkout-form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  appearance: none;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.checkout-form select:focus {
+  border-color: #007bff;
+}
+
+/* Labels */
+.checkout-form .form-group label {
+    text-align: left;
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  margin-top: 10px;
+
+}
+
+/* Cash on Delivery radio buttons styled like other inputs */
+.checkout-form .payment-method {
+  margin-top: 15px;
+}
+
+.checkout-form .payment-method label {
+  display: block;
+  align-items: center;
+  /* justify-content: center; */
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-bottom: 8px;
+  cursor: pointer;
+  gap: 10px; /* space between radio and text */
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.checkout-form .payment-method input[type="radio"] {
+    display: flex;
+  margin: 0;
+  appearance: auto;
+  accent-color: #007bff;
+  width: 16px;
+  height: 16px;
+}
+
+.checkout-form .payment-method label:hover {
+  border-color: #007bff;
+  background-color: #f1faff;
+}
+
+
+ #goTopBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    z-index: 10011;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 12px 19px;
+    border-radius: 50%;
+    display: none; /* Hidden by default */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  #goTopBtn:hover {
+    background-color: #ffffff;
+    color: #333;
+  }
+
+  </style>
+</head>
+<body>
+  <!-- Reuse the same navbar from previous pages -->
+ <nav class="navbar">
+    <div class="logo"><img src="logo.png" alt="logoimg"></div>
+
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+
+      <li class="dropdown">
+        <a href="#" id="shop-toggle">Shop ▾</a>
+        <ul class="dropdown-menu" id="shop-dropdown">
+          <li><a href="beach_collection.html">Beach</a></li>
+          <li><a href="sportscollection.html">Sports</a></li>
+          <li><a href="girls_collection.html">Girls</a></li>
+          <li><a href="quotes_collection.html">Quotes</a></li>
+          <li><a href="carscollection.html">Cars</a></li>
+          <!-- <li><a href="#">Women</a></li> -->
+        </ul>
+      </li>
+
+      <li><a href="custome_design.html">Custom Design</a></li>
+      <li><a href="index.html#contact">Contact Us</a></li>
+     <li class="cart-icon"><img src="cart.png" alt="cart-icon" height="25px" width="25px"></li>
+    </ul>
+  </nav>
+  
+<button id="goTopBtn" title="Go to top">⬆️</button>
+
+  <main class="collections-page">
+    <h1 class="collection-title">Quotes Collection</h1>
+    
+    <div class="products-grid">
+      <!-- Product 1 -->
+      <article class="product-card">
+        <div class="product-image">
+          <img src="sh.png" alt="Beach Theme T-Shirt">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Think Design</h3>
+          <p class="product-price">1,499</p>
+          <div class="product-actions">
+            <button class="btn-cart">Add to Cart</button>
+            <button class="btn-buy">Buy Now</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2 -->
+      <article class="product-card">
+        <div class="product-image">
+          <img src="quotes2.png" alt="Sports Theme T-Shirt">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Stay Positive</h3>
+          <p class="product-price">1,799</p>
+          <div class="product-actions">
+            <button class="btn-cart">Add to Cart</button>
+            <button class="btn-buy">Buy Now</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 3 -->
+      <article class="product-card">
+        <div class="product-image">
+          <img src="quotes3.png" alt="Tech Theme T-Shirt">
+        </div>
+        <div class="product-info">
+          <h3 class="product-title">Big Bold</h3>
+          <p class="product-price">1,999</p>
+          <div class="product-actions">
+            <button class="btn-cart">Add to Cart</button>
+            <button class="btn-buy">Buy Now</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Add more products following the same structure -->
+    </div>
+  </main>
+
+  <!-- Reuse the same footer from previous pages -->
+ <footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <img src="logo.png" alt="LeNoir Logo" class="footer-logo">
+      <p class="tagline">Redefining Modern Fashion</p>
+    </div>
+    
+    <div class="footer-social">
+      <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="social-link"><i class="fab fa-pinterest"></i></a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2023 Linoir. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="checkout-overlay" id="checkoutOverlay">
+  <div class="checkout-modal">
+    <button class="close-btn">&times;</button>
+    <div class="checkout-content">
+      <div class="product-details">
+        <img id="checkoutImage" src="" alt="Product Image">
+        <h2 id="checkoutTitle"></h2>
+        <p class="checkout-price" id="checkoutPrice"></p>
+      </div>
+      
+
+
+          
+
+      <form class="checkout-form">
+
+  <h3>Product Details</h3>
+  <div class="form-group">
+    <label for="color">Select Color:</label>
+    <select id="color" required>
+      <option value="" disabled selected>Select Color</option>
+      <option value="black">Black</option>
+      <option value="white">White</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="size">Select Size:</label>
+    <select id="size" required>
+      <option value="" disabled selected>Select Size</option>
+      <option value="s">S</option>
+      <option value="m">M</option>
+      <option value="l">L</option>
+      <option value="xl">XL</option>
+      <option value="xxl">XXL</option>
+    </select>
+  </div>
+
+  <h3>Shipping Information</h3>
+  <div class="form-group">
+    <input type="text" placeholder="Full Name" required>
+  </div>
+  <div class="form-group">
+    <input type="email" placeholder="Email Address" required>
+  </div>
+  <div class="form-group">
+    <input type="text" placeholder="Shipping Address" required>
+  </div>
+
+  <h3>Payment Details</h3>
+  <div class="form-group">
+    <input type="text" placeholder="Card Number" required>
+  </div>
+  <div class="form-group grid">
+    <input type="text" placeholder="MM/YY" required>
+    <input type="text" placeholder="CVC" required>
+  </div>
+
+  <div class="form-group payment-option">
+  <label>
+    
+    Pay with Card<input type="radio" name="payment-method" value="card" checked>
+  </label>
+  <label>
+    
+    Cash on Delivery<input type="radio" name="payment-method" value="cod">
+  </label>
+</div>
+
+  <button type="submit" class="btn-buy" onclick="preventDefaultA(event)">Complete Purchase</button>
+
+</form>
+
+    </div>
+  </div>
+</div>
+
+    
+
+  <script>
+    
+  // Hamburger menu toggle
+  document.getElementById("menu-toggle").addEventListener("click", function () {
+    document.getElementById("nav-links").classList.toggle("show");
+  });
+
+  // Dropdown toggle for Shop menu (optional for mobile)
+  document.getElementById("shop-toggle").addEventListener("click", function (e) {
+    e.preventDefault();
+    document.getElementById("shop-dropdown").classList.toggle("show");
+  });
+
+  // Handle Buy Now buttons to show the checkout modal
+  document.querySelectorAll(".btn-buy").forEach(button => {
+    button.addEventListener("click", function () {
+      const productCard = this.closest(".product-card");
+      const imageSrc = productCard.querySelector("img").src;
+      const title = productCard.querySelector(".product-title").textContent;
+      const price = productCard.querySelector(".product-price").textContent;
+
+      document.getElementById("checkoutImage").src = imageSrc;
+      document.getElementById("checkoutTitle").textContent = title;
+      document.getElementById("checkoutPrice").textContent = "PKR " + price;
+
+      document.getElementById("checkoutOverlay").style.display = "flex";
+    });
+  });
+
+  // Close checkout modal
+  document.querySelector(".close-btn").addEventListener("click", function () {
+    document.getElementById("checkoutOverlay").style.display = "none";
+  });
+
+  // Optional: Close modal by clicking outside the modal
+  document.getElementById("checkoutOverlay").addEventListener("click", function (e) {
+    if (e.target === this) {
+      this.style.display = "none";
+    }
+  });
+
+  function preventDefaultA(event) {
+  event.preventDefault();  // now event is defined
+
+  // Hide the overlay
+  document.getElementById("checkoutOverlay").style.display = "none";
+
+  // Show the confirmation checkmark
+  checkmark();
+}
+
+
+  function checkmark() {
+//    popup box with a checkmark saying "Order Confirmed! Thank you for shopping with us."
+    const alertBox = document.createElement("div");
+    alertBox.className = "alert alert-success";
+    alertBox.innerHTML = `
+      <div class="alert-content">
+        <i class="fas fa-check-circle"></i>
+        <span>Order Confirmed! Thank you for shopping with us.</span>
+      </div>
+    `;
+    document.body.appendChild(alertBox);
+
+    setTimeout(() => {
+      alertBox.remove();
+    }, 3000);
+    
+    alertBox.style.zIndex = 1001;
+  }
+
+const goTopBtn = document.getElementById("goTopBtn");
+
+  // Show the button when user scrolls down
+  window.onscroll = () => {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      goTopBtn.style.display = "block";
+    } else {
+      goTopBtn.style.display = "none";
+    }
+  };
+
+  // Scroll to the top when the button is clicked
+  goTopBtn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  </script>
+</body>
+</html>
