@@ -59,24 +59,76 @@
 
       <li><a href="custome_design.html">Custom Design</a></li>
       <li><a href="index.html#contact">Contact Us</a></li>
-      <li class="cart-icon"><img src="cart.png" alt="cart-icon" height="25px" width="25px"></li>
+      <li class="cart-icon"><img src="cart.png" alt="cart-icon" height="25px" width="25px"><span>0</span></li>
     </ul>
   </nav>
 
 <!-- <button id="goTopBtn" title="Go to top">⬆️</button> -->
 
 
+<!-- panel for add to cart with the list of items -->
+ <div class="cart-panel active-panel" >
+
+<div class="items-wrapper">
+
+  <!-- <div class="item-list">
+    <div class="item">
+      <img src="https://images.unsplash.com/photo-1652794121113-1a2a9563daaf?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beach T-Shirt">
+      
+      <div class="quantity">
+        <label for="quantity">Qty:</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+      </div>
+      <div class="item-title">
+        <h3>Beach T-Shirt</h3>
+        <p class="item-price">$19.99</p>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="item-list">
+    <div class="item">
+      <img src="https://images.unsplash.com/photo-1652794121113-1a2a9563daaf?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beach T-Shirt">
+      
+      <div class="quantity">
+        <label for="quantity">Qty:</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="10" value="1">
+      </div>
+      <div class="item-title">
+        <h3>Beach T-Shirt</h3>
+        <p class="item-price">$19.99</p>
+      </div>
+      
+    </div>
+  </div> -->
+  
+  
+
+ </div>
+  
+
+  <div class="cart-panel-btns">
+     <button class="checkout-btn">Checkout</button>
+    <button class="close-btn">Close</button>
+   
+  </div>
+ </div>
+ 
+
+
+
 <section class="hero">
     <div class="hero-content">
       <h1 class="animate__animated animate__fadeInDown">Style with LINOIR</h1>
       <p class="animate__animated animate__fadeInUp">Discover premium t-shirts with bold, modern designs.</p>
-      <a href="#" class="hero-btn animate__animated animate__fadeIn">Shop Now</a>
+      <a href="#categories" class="hero-btn animate__animated animate__fadeIn">Shop Now</a>
     </div>
   </section>
 
 
   <!-- Add this after the Hero section -->
-<section class="categories">
+<section class="categories" id="categories">
   <div class="container">
     <h2 class="categories-section-title">Explore Collections</h2>
     
@@ -88,7 +140,7 @@
         </div>
         <div class="category-content">
           <h3>Beach</h3>
-          <a href="#" class="category-btn">View Collection</a>
+          <a href="beach_collection.html" class="category-btn">View Collection</a>
         </div>
       </div>
 
@@ -99,18 +151,18 @@
         </div>
         <div class="category-content">
           <h3>Sports</h3>
-          <a href="#" class="category-btn">View Collection</a>
+          <a href="sportscollection.html" class="category-btn">View Collection</a>
         </div>
       </div>
 
-      <!-- Tech Category -->
+      <!-- Girls Category -->
       <div class="category-card">
         <div class="category-image">
           <img src="https://images.unsplash.com/photo-1727204898451-2912cdcc208f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tech Collection">
         </div>
         <div class="category-content">
           <h3>Girls</h3>
-          <a href="#" class="category-btn">View Collection</a>
+          <a href="girls_collection.html" class="category-btn">View Collection</a>
         </div>
       </div>
 
@@ -121,7 +173,7 @@
         </div>
         <div class="category-content">
           <h3>Quotes</h3>
-          <a href="#" class="category-btn">View Collection</a>
+          <a href="quotes_collection.html" class="category-btn">View Collection</a>
         </div>
       </div>
 
@@ -132,7 +184,7 @@
         </div>
         <div class="category-content">
           <h3>Cars</h3>
-          <a href="#" class="category-btn">View Collection</a>
+          <a href="carscollection.html" class="category-btn">View Collection</a>
         </div>
       </div>
 
@@ -254,9 +306,9 @@
 
   <script>
     // Hamburger toggle
-    const toggle = document.getElementById('menu-toggle');
+    const toggled = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
-    toggle.addEventListener('click', () => {
+    toggled.addEventListener('click', () => {
       navLinks.classList.toggle('active');
     });
 
@@ -295,6 +347,6 @@
 </script>
 
   
-
+<script src="script.js"></script>
 </body>
 </html>
