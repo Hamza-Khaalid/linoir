@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Linoir — Minimal premium t-shirts. Clean designs, quality fabric.">
+  <title>Linoir — Premium Minimal Tees</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
+  <style>
+    /* ── Hero ──────────────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 64px 80px 0;
+    }
+
+    .hero-content .section-label { margin-bottom: 20px; }
+
+    .hero-content h1 {
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .hero-content h1 em {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-content p {
+      font-size: 15px;
+      color: var(--text-mid);
+      max-width: 380px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      background: var(--light);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-image-badge {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      background: var(--white);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-image-badge p {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 4px;
+    }
+
+    .hero-image-badge strong {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* ── Marquee ──────────────────────────────────────────────────────────── */
+    .marquee-strip {
+      background: var(--black);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .marquee-inner {
+      display: inline-flex;
+      animation: marquee 24s linear infinite;
+    }
+
+    .marquee-inner span {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      padding: 0 32px;
+    }
+
+    .marquee-inner span.accent { color: var(--accent); }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── Collections Grid ─────────────────────────────────────────────────── */
+    .collections-section { padding: 96px 0; }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .section-header h2 { font-weight: 400; }
+
+    .view-all-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color var(--transition);
+    }
+
+    .view-all-link:hover { color: var(--black); }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      aspect-ratio: 2/3;
+      cursor: pointer;
+      display: block;
+    }
+
+    .collection-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .collection-card:hover img { transform: scale(1.06); }
+
+    .collection-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 16px;
+    }
+
+    .collection-card-overlay h3 {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .collection-card-overlay span {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── Featured Products ─────────────────────────────────────────────────── */
+    .featured-section {
+      padding: 96px 0;
+      background: var(--off-white);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px 20px;
+    }
+
+    /* ── Brand Values ──────────────────────────────────────────────────────── */
+    .values-section {
+      padding: 96px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+    }
+
+    .value-item { text-align: center; }
+
+    .value-icon {
+      width: 48px; height: 48px;
+      margin: 0 auto 20px;
+      color: var(--accent);
+    }
+
+    .value-item h3 {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .value-item p {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ── Newsletter ────────────────────────────────────────────────────────── */
+    .newsletter-section {
+      padding: 96px 0;
+      background: var(--black);
+      text-align: center;
+    }
+
+    .newsletter-section .section-label { color: var(--accent); }
+
+    .newsletter-section h2 {
+      color: var(--white);
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .newsletter-section p {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 440px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-right: none;
+      border-radius: var(--radius) 0 0 var(--radius);
+      color: var(--white);
+      font-size: 14px;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-form input:focus { border-color: rgba(255,255,255,0.4); }
+
+    .newsletter-form button {
+      padding: 14px 24px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      transition: background var(--transition);
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover { background: var(--accent-dark); }
+
+    /* ── Responsive ────────────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-content { padding: 64px 0 40px; }
+      .hero-image { height: 60vw; }
+      .collections-grid { grid-template-columns: repeat(3, 1fr); }
+      .featured-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content { padding: 48px 0 32px; }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .collections-grid { grid-template-columns: repeat(2, 1fr); }
+      .values-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-right: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius); }
+      .newsletter-form button { border-radius: var(--radius); }
+    }
+
+    @media (max-width: 480px) {
+      .collections-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .featured-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="page-body">
+
+  <!-- ── Navbar ─────────────────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="./index.html" class="nav-logo">
+        <span>Linoir</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="./index.html" class="active">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="#">
+            Shop
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="./collections/beach.html">Beach</a></li>
+            <li><a href="./collections/sports.html">Sports</a></li>
+            <li><a href="./collections/girls.html">Girls</a></li>
+            <li><a href="./collections/quotes.html">Quotes</a></li>
+            <li><a href="./collections/cars.html">Cars</a></li>
+          </ul>
+        </li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-right">
+        <button class="nav-icon-btn cart-trigger" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-count">0</span>
+        </button>
+        <button class="menu-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Cart Panel ──────────────────────────────────────────────────────── -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-panel-header">
+      <h2>Your Cart</h2>
+      <button class="cart-close" aria-label="Close cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items-wrapper"></div>
+    <div class="cart-panel-footer">
+      <div class="cart-total">
+        <span>Total</span>
+        <span class="cart-total-amount">PKR 0</span>
+      </div>
+      <a href="./checkout.html" class="cart-checkout-btn" id="cartCheckoutBtn">Checkout</a>
+    </div>
+  </aside>
+
+  <!-- ── Quick Add Modal ─────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="quick-add-modal" id="quickAddModal">
+    <button class="qa-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="qa-header">
+      <img src="" alt="" class="qa-product-img">
+      <div>
+        <h3 class="qa-product-name"></h3>
+        <p class="qa-product-price"></p>
+        <p class="qa-product-desc"></p>
+      </div>
+    </div>
+    <div class="qa-section">
+      <p class="qa-label">Size</p>
+      <div class="qa-sizes"></div>
+    </div>
+    <div class="qa-section">
+      <p class="qa-label">Color</p>
+      <div class="qa-colors"></div>
+    </div>
+    <button class="qa-add-btn">Add to Cart</button>
+  </div>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section class="hero container">
+    <div class="hero-content">
+      <p class="section-label">New Collection 2026</p>
+      <h1>Wear less.<br><em>Say more.</em></h1>
+      <p>Premium minimal tees designed for those who let quality speak for itself. Clean lines, exceptional fabric, timeless style.</p>
+      <div class="hero-actions">
+        <a href="./collections/beach.html" class="btn btn-primary">Shop Now</a>
+        <a href="#collections" class="btn btn-ghost">View Collections</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=900&auto=format&fit=crop" alt="Linoir Premium Tees">
+      <div class="hero-image-badge">
+        <p>Free shipping</p>
+        <strong>On orders over PKR 3,000</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Marquee ─────────────────────────────────────────────────────────── -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span>Premium Cotton</span><span class="accent">✦</span>
+      <span>Minimal Design</span><span class="accent">✦</span>
+      <span>Free Returns</span><span class="accent">✦</span>
+      <span>Made to Last</span><span class="accent">✦</span>
+      <span>5 Collections</span><span class="accent">✦</span>
+      <span>Ships Nationwide</span><span class="accent">✦</span>
+      <span>Premium Cotton</span><span class="accent">✦</span>
+      <span>Minimal Design</span><span class="accent">✦</span>
+      <span>Free Returns</span><span class="accent">✦</span>
+      <span>Made to Last</span><span class="accent">✦</span>
+      <span>5 Collections</span><span class="accent">✦</span>
+      <span>Ships Nationwide</span><span class="accent">✦</span>
+    </div>
+  </div>
+
+  <!-- ── Collections ─────────────────────────────────────────────────────── -->
+  <section class="collections-section" id="collections">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Browse</p>
+          <h2>Our Collections</h2>
+        </div>
+      </div>
+      <div class="collections-grid" id="collectionsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ── Featured Products ───────────────────────────────────────────────── -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Hand Picked</p>
+          <h2>Bestsellers</h2>
+        </div>
+        <a href="./collections/beach.html" class="view-all-link">
+          View All
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+      <div class="featured-grid" id="featuredProducts"></div>
+    </div>
+  </section>
+
+  <!-- ── Values ──────────────────────────────────────────────────────────── -->
+  <section class="values-section" id="about">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 64px;">
+        <p class="section-label">Why Linoir</p>
+        <h2>Built on principles</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-item">
+          <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <h3>Premium Quality</h3>
+          <p>100% combed cotton, pre-shrunk, and crafted to keep its shape wash after wash.</p>
+        </div>
+        <div class="value-item">
+          <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <h3>Fast Shipping</h3>
+          <p>Orders packed and dispatched within 24 hours. Delivered nationwide in 3–5 days.</p>
+        </div>
+        <div class="value-item">
+          <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+          </svg>
+          <h3>Easy Returns</h3>
+          <p>Not happy? Return within 7 days, no questions asked. Full refund guaranteed.</p>
+        </div>
+        <div class="value-item">
+          <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+          <h3>Made with Care</h3>
+          <p>Every design is thoughtfully crafted. We believe in making things that matter.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Newsletter ───────────────────────────────────────────────────────── -->
+  <section class="newsletter-section" id="contact">
+    <div class="container">
+      <p class="section-label">Stay in the loop</p>
+      <h2>New drops, early access.</h2>
+      <p>Join the Linoir community for exclusive drops and early access.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Footer ──────────────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Linoir</div>
+          <p>Premium minimal tees for those who appreciate quality and simplicity.</p>
+          <div class="footer-social">
+            <a href="#" class="social-link" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" aria-label="TikTok">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12a4 4 0 100 8 4 4 0 000-8z"/>
+                <path d="M15 8a4 4 0 004 4V4a4 4 0 01-4 4z"/>
+                <path d="M9 16v-8"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="./collections/beach.html">Beach</a></li>
+            <li><a href="./collections/sports.html">Sports</a></li>
+            <li><a href="./collections/girls.html">Girls</a></li>
+            <li><a href="./collections/quotes.html">Quotes</a></li>
+            <li><a href="./collections/cars.html">Cars</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Track Order</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> Linoir. All rights reserved.</p>
+        <p>Made in Pakistan 🇵🇰</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/cart.js"></script>
+  <script src="./js/products.js"></script>
+  <script src="./js/main.js"></script>
+  <script>
+    // Load collections grid
+    async function loadCollections() {
+      const res = await fetch('./data/products.json');
+      const data = await res.json();
+      const grid = document.getElementById('collectionsGrid');
+      grid.innerHTML = data.collections.map(c => `
+        <a href="./collections/${c.id}.html" class="collection-card">
+          <img src="${c.image}" alt="${c.name}" loading="lazy">
+          <div class="collection-card-overlay">
+            <h3>${c.name}</h3>
+            <span>${c.description}</span>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    // Newsletter
+    function handleNewsletter(e) {
+      e.preventDefault();
+      Cart.showToast('Thanks for subscribing!');
+      e.target.reset();
+    }
+
+    loadCollections();
+    Products.renderFeatured('featuredProducts', 4);
+  </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — Linoir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/checkout.css">
+</head>
+<body class="confirmation-page">
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header class="checkout-header">
+    <div class="container">
+      <a href="./index.html" class="checkout-logo">Linoir</a>
+    </div>
+  </header>
+
+  <!-- ── Body ────────────────────────────────────────────────────────────── -->
+  <main class="confirmation-body">
+    <div class="container">
+      <div class="confirmation-card">
+
+        <!-- Top: Success message -->
+        <div class="confirmation-top">
+          <div class="confirmation-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h1>Order Confirmed!</h1>
+          <p>Thank you for your order. We'll get it packed and shipped soon.</p>
+          <p id="confirmEmail" style="color:var(--text-mid); font-size:13px;"></p>
+          <div class="order-number" id="orderNumber">LNR-000000</div>
+        </div>
+
+        <!-- Order Details -->
+        <div class="confirmation-details">
+          <h3>Order Details</h3>
+          <div class="detail-row">
+            <span>Order Number</span>
+            <span id="detailOrderId">—</span>
+          </div>
+          <div class="detail-row">
+            <span>Order Date</span>
+            <span id="detailDate">—</span>
+          </div>
+          <div class="detail-row">
+            <span>Payment Method</span>
+            <span id="detailPayment">—</span>
+          </div>
+          <div class="detail-row">
+            <span>Shipping To</span>
+            <span id="detailAddress">—</span>
+          </div>
+          <div class="detail-row">
+            <span>Estimated Delivery</span>
+            <span>3–5 Business Days</span>
+          </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="confirmation-items">
+          <h3>Items Ordered</h3>
+          <div id="confirmationItems"></div>
+
+          <!-- Totals -->
+          <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+            <div class="summary-row">
+              <span style="color:var(--text-mid); font-size:13px;">Subtotal</span>
+              <span id="confirmSubtotal" style="font-size:13px;">PKR 0</span>
+            </div>
+            <div class="summary-row">
+              <span style="color:var(--text-mid); font-size:13px;">Shipping</span>
+              <span id="confirmShipping" style="font-size:13px;">PKR 0</span>
+            </div>
+            <div class="summary-row" id="confirmDiscountRow" style="display:none;">
+              <span style="color:var(--text-mid); font-size:13px;">Discount</span>
+              <span id="confirmDiscount" style="font-size:13px; color:var(--success);">-PKR 0</span>
+            </div>
+            <div class="summary-row" style="font-weight:600; font-size:15px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+              <span>Total</span>
+              <span id="confirmTotal">PKR 0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer actions -->
+        <div class="confirmation-footer">
+          <a href="./index.html" class="btn btn-primary">Continue Shopping</a>
+          <button class="btn btn-outline" onclick="window.print()">Print Receipt</button>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ── Footer ──────────────────────────────────────────────────────────── -->
+  <footer class="site-footer" style="margin-top: auto;">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> Linoir. All rights reserved.</p>
+        <p>Made in Pakistan 🇵🇰</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/cart.js"></script>
+  <script>
+    // Load order from localStorage
+    const order = JSON.parse(localStorage.getItem('linoir_last_order'));
+
+    if (!order) {
+      // No order found — redirect home
+      window.location.href = './index.html';
+    } else {
+      // Populate header
+      document.getElementById('orderNumber').textContent = order.id;
+      document.getElementById('confirmEmail').textContent =
+        `A confirmation will be sent to ${order.customer.email}`;
+
+      // Order details
+      document.getElementById('detailOrderId').textContent = order.id;
+      document.getElementById('detailDate').textContent = order.date;
+      document.getElementById('detailAddress').textContent = order.customer.address;
+
+      const paymentLabels = {
+        cod: 'Cash on Delivery',
+        card: 'Credit / Debit Card',
+        easypaisa: 'EasyPaisa / JazzCash'
+      };
+      document.getElementById('detailPayment').textContent =
+        paymentLabels[order.payment] || order.payment;
+
+      // Items
+      const itemsEl = document.getElementById('confirmationItems');
+      itemsEl.innerHTML = order.items.map(item => `
+        <div class="summary-item">
+          <div class="summary-item-img-wrap">
+            <img
+              src="${item.image}"
+              alt="${item.name}"
+              class="summary-item-img"
+              onerror="this.src='./assets/images/placeholder.png'"
+            >
+            <span class="summary-item-qty">${item.qty}</span>
+          </div>
+          <div class="summary-item-info">
+            <p class="summary-item-name">${item.name}</p>
+            <p class="summary-item-meta">${item.size} · ${item.color}</p>
+          </div>
+          <span class="summary-item-price">PKR ${(item.price * item.qty).toLocaleString()}</span>
+        </div>
+      `).join('');
+
+      // Totals
+      document.getElementById('confirmSubtotal').textContent =
+        `PKR ${order.subtotal.toLocaleString()}`;
+      document.getElementById('confirmShipping').innerHTML =
+        order.shipping === 0
+          ? `<span style="color:var(--success)">Free</span>`
+          : `PKR ${order.shipping.toLocaleString()}`;
+      document.getElementById('confirmTotal').textContent =
+        `PKR ${order.total.toLocaleString()}`;
+
+      if (order.discount > 0) {
+        document.getElementById('confirmDiscountRow').style.display = 'flex';
+        document.getElementById('confirmDiscount').textContent =
+          `-PKR ${order.discount.toLocaleString()}`;
+      }
+
+      // Footer year
+      document.getElementById('footerYear').textContent = new Date().getFullYear();
+    }
+  </script>
+</body>
+</html>

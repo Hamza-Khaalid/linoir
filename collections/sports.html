@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Linoir Sports Collection — Performance style for the court and the street. Athletic graphics on moisture-wicking premium cotton.">
+  <title>Sports Collection — Linoir</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/collections.css">
+</head>
+<body class="page-body">
+  <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="nav-logo"><span>Linoir</span></a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li class="nav-dropdown">
+          <a href="#">Shop <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+          <ul class="dropdown-menu">
+            <li><a href="./beach.html">Beach</a></li>
+            <li><a href="./sports.html">Sports</a></li>
+            <li><a href="./girls.html">Girls</a></li>
+            <li><a href="./quotes.html">Quotes</a></li>
+            <li><a href="./cars.html">Cars</a></li>
+          </ul>
+        </li>
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-icon-btn cart-trigger" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="cart-count">0</span>
+        </button>
+        <button class="menu-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-panel" id="cartPanel">
+    <div class="cart-panel-header">
+      <h2>Your Cart</h2>
+      <button class="cart-close" aria-label="Close cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items-wrapper"></div>
+    <div class="cart-panel-footer">
+      <div class="cart-total"><span>Total</span><span class="cart-total-amount">PKR 0</span></div>
+      <a href="../checkout.html" class="cart-checkout-btn">Checkout</a>
+    </div>
+  </aside>
+
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="quick-add-modal" id="quickAddModal">
+    <button class="qa-close" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="qa-header">
+      <img src="" alt="" class="qa-product-img">
+      <div>
+        <h3 class="qa-product-name"></h3>
+        <p class="qa-product-price"></p>
+        <p class="qa-product-desc"></p>
+      </div>
+    </div>
+    <div class="qa-section">
+      <p class="qa-label">Size</p>
+      <div class="qa-sizes"></div>
+    </div>
+    <div class="qa-section">
+      <p class="qa-label">Color</p>
+      <div class="qa-colors"></div>
+    </div>
+    <button class="qa-add-btn">Add to Cart</button>
+  </div>
+
+  <div class="collection-header">
+    <div class="container">
+      <div class="collection-header-inner">
+        <div>
+          <p class="section-label">Linoir</p>
+          <h1>Sports Collection</h1>
+          <p>Performance style for the court and the street. Athletic graphics on moisture-wicking premium cotton.</p>
+        </div>
+        <span class="collection-count" id="productCount"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="collection-toolbar">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+      <div class="toolbar-left">
+        <span class="toolbar-label">Filter</span>
+        <select class="toolbar-select" id="filterSize">
+          <option value="all">All Sizes</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+      </div>
+      <div class="toolbar-right">
+        <span class="toolbar-label">Sort</span>
+        <select class="toolbar-select" id="sortBy">
+          <option value="default">Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="collection-body">
+    <div class="container">
+      <div class="products-loading"><div class="loading-spinner"></div></div>
+      <div class="products-grid" id="productsGrid" style="display:none;"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-brand-name">Linoir</div>
+          <p>Premium minimal tees for those who appreciate quality and simplicity.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="./beach.html">Beach</a></li>
+            <li><a href="./sports.html">Sports</a></li>
+            <li><a href="./girls.html">Girls</a></li>
+            <li><a href="./quotes.html">Quotes</a></li>
+            <li><a href="./cars.html">Cars</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Track Order</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="../index.html#about">About Us</a></li>
+            <li><a href="../index.html#contact">Contact</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© <span id="footerYear"></span> Linoir. All rights reserved.</p>
+        <p>Made in Pakistan 🇵🇰</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/cart.js"></script>
+  <script src="../js/products.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    (async () => {
+      await Products.renderCollection('sports');
+      const count = Products.getAllProducts().filter(p => p.collection === 'sports').length;
+      document.getElementById('productCount').textContent = count + ' products';
+      document.querySelector('.products-loading').style.display = 'none';
+      document.getElementById('productsGrid').style.display = 'grid';
+    })();
+  </script>
+</body>
+</html>
