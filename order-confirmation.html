@@ -109,72 +109,73 @@
   </footer>
 
   <script src="./js/cart.js"></script>
-  <script>
-    // Load order from localStorage
-    const order = JSON.parse(localStorage.getItem('linoir_last_order'));
+  <script src="./js/cart.js"></script>
+<script>
+  const order = JSON.parse(localStorage.getItem('linoir_last_order'));
 
-    if (!order) {
-      // No order found — redirect home
-      window.location.href = './index.html';
-    } else {
-      // Populate header
-      document.getElementById('orderNumber').textContent = order.id;
-      document.getElementById('confirmEmail').textContent =
-        `A confirmation will be sent to ${order.customer.email}`;
+  if (!order) {
+    window.location.href = './index.html';
+  } else {
+    // Populate header
+    document.getElementById('orderNumber').textContent = order.id;
+    document.getElementById('confirmEmail').textContent =
+      `A confirmation will be sent to ${order.customer.email}`;
 
-      // Order details
-      document.getElementById('detailOrderId').textContent = order.id;
-      document.getElementById('detailDate').textContent = order.date;
-      document.getElementById('detailAddress').textContent = order.customer.address;
+    // Order details
+    document.getElementById('detailOrderId').textContent = order.id;
+    document.getElementById('detailDate').textContent = order.date;
+    document.getElementById('detailAddress').textContent = order.customer.address;
 
-      const paymentLabels = {
-        cod: 'Cash on Delivery',
-        card: 'Credit / Debit Card',
-        easypaisa: 'EasyPaisa / JazzCash'
-      };
-      document.getElementById('detailPayment').textContent =
-        paymentLabels[order.payment] || order.payment;
+    const paymentLabels = {
+      cod: 'Cash on Delivery',
+      card: 'Credit / Debit Card',
+      easypaisa: 'EasyPaisa / JazzCash'
+    };
+    document.getElementById('detailPayment').textContent =
+      paymentLabels[order.payment] || order.payment;
 
-      // Items
-      const itemsEl = document.getElementById('confirmationItems');
-      itemsEl.innerHTML = order.items.map(item => `
-        <div class="summary-item">
-          <div class="summary-item-img-wrap">
-            <img
-              src="${item.image}"
-              alt="${item.name}"
-              class="summary-item-img"
-              onerror="this.src='./assets/images/placeholder.png'"
-            >
-            <span class="summary-item-qty">${item.qty}</span>
-          </div>
-          <div class="summary-item-info">
-            <p class="summary-item-name">${item.name}</p>
-            <p class="summary-item-meta">${item.size} · ${item.color}</p>
-          </div>
-          <span class="summary-item-price">PKR ${(item.price * item.qty).toLocaleString()}</span>
+    // Items
+    const itemsEl = document.getElementById('confirmationItems');
+    itemsEl.innerHTML = order.items.map(item => `
+      <div class="summary-item">
+        <div class="summary-item-img-wrap">
+          <img src="${item.image}" alt="${item.name}" class="summary-item-img"
+            onerror="this.src='./assets/images/placeholder.png'">
+          <span class="summary-item-qty">${item.qty}</span>
         </div>
-      `).join('');
+        <div class="summary-item-info">
+          <p class="summary-item-name">${item.name}</p>
+          <p class="summary-item-meta">${item.size} · ${item.color}</p>
+        </div>
+        <span class="summary-item-price">PKR ${(item.price * item.qty).toLocaleString()}</span>
+      </div>
+    `).join('');
 
-      // Totals
-      document.getElementById('confirmSubtotal').textContent =
-        `PKR ${order.subtotal.toLocaleString()}`;
-      document.getElementById('confirmShipping').innerHTML =
-        order.shipping === 0
-          ? `<span style="color:var(--success)">Free</span>`
-          : `PKR ${order.shipping.toLocaleString()}`;
-      document.getElementById('confirmTotal').textContent =
-        `PKR ${order.total.toLocaleString()}`;
+    // Totals
+    document.getElementById('confirmSubtotal').textContent = `PKR ${order.subtotal.toLocaleString()}`;
+    document.getElementById('confirmShipping').innerHTML = order.shipping === 0
+      ? `<span style="color:var(--success)">Free</span>`
+      : `PKR ${order.shipping.toLocaleString()}`;
+    document.getElementById('confirmTotal').textContent = `PKR ${order.total.toLocaleString()}`;
 
-      if (order.discount > 0) {
-        document.getElementById('confirmDiscountRow').style.display = 'flex';
-        document.getElementById('confirmDiscount').textContent =
-          `-PKR ${order.discount.toLocaleString()}`;
-      }
-
-      // Footer year
-      document.getElementById('footerYear').textContent = new Date().getFullYear();
+    if (order.discount > 0) {
+      document.getElementById('confirmDiscountRow').style.display = 'flex';
+      document.getElementById('confirmDiscount').textContent = `-PKR ${order.discount.toLocaleString()}`;
     }
-  </script>
+
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    // ── Save order to backend so agent can look it up ──
+    fetch('http://localhost:3001/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    }).catch(() => {}); // silent fail if backend is off
+  }
+</script>
+
+<!-- Chat widget — loads on every page -->
+<script src="./widget.js"></script>
+  
 </body>
 </html>
