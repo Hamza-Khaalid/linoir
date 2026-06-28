@@ -166,7 +166,7 @@
     document.getElementById('footerYear').textContent = new Date().getFullYear();
 
     // ── Save order to backend so agent can look it up ──
-    fetch('http://localhost:3001/api/orders', {
+    fetch('https://linoir-agent.vercel.app/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order)

@@ -3,7 +3,7 @@
 // <script src="./widget.js"></script>
 
 (function () {
-  const API_URL = "http://localhost:3001/api/chat";
+  const API_URL = "https://linoir-agent.vercel.app/api/chat";
   let history = [];
   let isOpen = false;
 
