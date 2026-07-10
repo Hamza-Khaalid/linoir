@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
   <link rel="stylesheet" href="./css/main.css">
   <link rel="stylesheet" href="./css/checkout.css">
 </head>
+
 <body class="confirmation-page">
 
   <!-- ── Header ──────────────────────────────────────────────────────────── -->
@@ -28,7 +30,7 @@
         <div class="confirmation-top">
           <div class="confirmation-icon">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="20 6 9 17 4 12"/>
+              <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
           <h1>Order Confirmed!</h1>
@@ -81,7 +83,8 @@
               <span style="color:var(--text-mid); font-size:13px;">Discount</span>
               <span id="confirmDiscount" style="font-size:13px; color:var(--success);">-PKR 0</span>
             </div>
-            <div class="summary-row" style="font-weight:600; font-size:15px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+            <div class="summary-row"
+              style="font-weight:600; font-size:15px; margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
               <span>Total</span>
               <span id="confirmTotal">PKR 0</span>
             </div>
@@ -110,33 +113,33 @@
 
   <script src="./js/cart.js"></script>
   <script src="./js/cart.js"></script>
-<script>
-  const order = JSON.parse(localStorage.getItem('linoir_last_order'));
+  <script>
+    const order = JSON.parse(localStorage.getItem('linoir_last_order'));
 
-  if (!order) {
-    window.location.href = './index.html';
-  } else {
-    // Populate header
-    document.getElementById('orderNumber').textContent = order.id;
-    document.getElementById('confirmEmail').textContent =
-      `A confirmation will be sent to ${order.customer.email}`;
+    if (!order) {
+      window.location.href = './index.html';
+    } else {
+      // Populate header
+      document.getElementById('orderNumber').textContent = order.id;
+      document.getElementById('confirmEmail').textContent =
+        `A confirmation will be sent to ${order.customer.email}`;
 
-    // Order details
-    document.getElementById('detailOrderId').textContent = order.id;
-    document.getElementById('detailDate').textContent = order.date;
-    document.getElementById('detailAddress').textContent = order.customer.address;
+      // Order details
+      document.getElementById('detailOrderId').textContent = order.id;
+      document.getElementById('detailDate').textContent = order.date;
+      document.getElementById('detailAddress').textContent = order.customer.address;
 
-    const paymentLabels = {
-      cod: 'Cash on Delivery',
-      card: 'Credit / Debit Card',
-      easypaisa: 'EasyPaisa / JazzCash'
-    };
-    document.getElementById('detailPayment').textContent =
-      paymentLabels[order.payment] || order.payment;
+      const paymentLabels = {
+        cod: 'Cash on Delivery',
+        card: 'Credit / Debit Card',
+        easypaisa: 'EasyPaisa / JazzCash'
+      };
+      document.getElementById('detailPayment').textContent =
+        paymentLabels[order.payment] || order.payment;
 
-    // Items
-    const itemsEl = document.getElementById('confirmationItems');
-    itemsEl.innerHTML = order.items.map(item => `
+      // Items
+      const itemsEl = document.getElementById('confirmationItems');
+      itemsEl.innerHTML = order.items.map(item => `
       <div class="summary-item">
         <div class="summary-item-img-wrap">
           <img src="${item.image}" alt="${item.name}" class="summary-item-img"
@@ -151,31 +154,39 @@
       </div>
     `).join('');
 
-    // Totals
-    document.getElementById('confirmSubtotal').textContent = `PKR ${order.subtotal.toLocaleString()}`;
-    document.getElementById('confirmShipping').innerHTML = order.shipping === 0
-      ? `<span style="color:var(--success)">Free</span>`
-      : `PKR ${order.shipping.toLocaleString()}`;
-    document.getElementById('confirmTotal').textContent = `PKR ${order.total.toLocaleString()}`;
+      // Totals
+      document.getElementById('confirmSubtotal').textContent = `PKR ${order.subtotal.toLocaleString()}`;
+      document.getElementById('confirmShipping').innerHTML = order.shipping === 0
+        ? `<span style="color:var(--success)">Free</span>`
+        : `PKR ${order.shipping.toLocaleString()}`;
+      document.getElementById('confirmTotal').textContent = `PKR ${order.total.toLocaleString()}`;
 
-    if (order.discount > 0) {
-      document.getElementById('confirmDiscountRow').style.display = 'flex';
-      document.getElementById('confirmDiscount').textContent = `-PKR ${order.discount.toLocaleString()}`;
-    }
+      if (order.discount > 0) {
+        document.getElementById('confirmDiscountRow').style.display = 'flex';
+        document.getElementById('confirmDiscount').textContent = `-PKR ${order.discount.toLocaleString()}`;
+      }
 
-    document.getElementById('footerYear').textContent = new Date().getFullYear();
+      document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    // ── Save order to backend so agent can look it up ──
-    fetch('https://linoir-agent.vercel.app/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(order)
-    }).catch(() => {}); // silent fail if backend is off
-  }
-</script>
+      // ── Save order to backend so agent can look it up ──
+      //   fetch('https://linoir-agent.vercel.app/api/orders', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify(order)
+      //   }).catch(() => {}); // silent fail if backend is off
+      // }
+      console.log('Saving order:', order);
+      fetch('https://linoir-agent.vercel.app/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      }).then(r => r.json()).then(d => console.log('Order saved:', d))
+        .catch(err => console.error('Order save failed:', err));}
+  </script>
 
-<!-- Chat widget — loads on every page -->
-<script src="./widget.js"></script>
-  
+  <!-- Chat widget — loads on every page -->
+  <script src="./widget.js"></script>
+
 </body>
+
 </html>
