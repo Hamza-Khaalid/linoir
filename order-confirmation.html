@@ -175,13 +175,11 @@
       //     body: JSON.stringify(order)
       //   }).catch(() => {}); // silent fail if backend is off
       // }
-      console.log('Saving order:', order);
       fetch('https://linoir-agent.vercel.app/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)
-      }).then(r => r.json()).then(d => console.log('Order saved:', d))
-        .catch(err => console.error('Order save failed:', err));}
+      }).catch(() => { });
   </script>
 
   <!-- Chat widget — loads on every page -->
