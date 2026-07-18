@@ -3,7 +3,9 @@
 // <script src="./widget.js"></script>
 
 (function () {
-  const API_URL = "https://linoir-agent.vercel.app/api/chat";
+  const API_BASE = "https://linoir-agent.vercel.app";
+  const API_URL = `${API_BASE}/api/chat`;
+  const ORDERS_URL = `${API_BASE}/api/orders`;
   let history = [];
   let isOpen = false;
 
@@ -269,7 +271,7 @@
   // ── Save order to backend after checkout ──────────────────────────────────────
   // Call this from order-confirmation.html after order is placed
   window.linoirSaveOrder = function(order) {
-    fetch("http://localhost:3001/api/orders", {
+    fetch(ORDERS_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(order)
